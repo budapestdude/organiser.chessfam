@@ -43,8 +43,7 @@ interface ClubAnalytics {
 export const clubsAPI = {
   // Get all clubs for current organizer
   async getMyClubs(): Promise<Club[]> {
-    const response = await apiClient.get('/clubs');
-    // Filter clubs where user is owner (will be done by backend ideally)
+    const response = await apiClient.get('/clubs/user/memberships');
     return response.data.data || response.data;
   },
 
