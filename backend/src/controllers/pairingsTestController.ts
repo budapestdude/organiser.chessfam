@@ -153,13 +153,19 @@ export async function runAutomatedTournament(req: Request, res: Response) {
     const { total_rounds, pairing_system } = tournamentResult.rows[0];
     const roundResults = [];
 
+    console.log(`[AutoTournament] Running ${total_rounds} rounds for tournament ${tournamentId}`);
+
     // Run through all rounds
     for (let round = 1; round <= total_rounds; round++) {
+      console.log(`[AutoTournament] Generating pairings for round ${round}/${total_rounds}`);
+
       // Generate pairings for this round
       const pairingResult = await generateAndSavePairings(
         parseInt(tournamentId),
         pairing_system
       );
+
+      console.log(`[AutoTournament] Generated ${pairingResult.pairings.length} pairings for round ${pairingResult.roundNumber}`);
 
       // Get all games for this round
       const gamesResult = await client.query(
@@ -168,6 +174,8 @@ export async function runAutomatedTournament(req: Request, res: Response) {
          WHERE tournament_id = $1 AND round_number = $2`,
         [tournamentId, round]
       );
+
+      console.log(`[AutoTournament] Found ${gamesResult.rows.length} games for round ${round}`);
 
       // Submit random results for each game
       const gameResults = [];
@@ -187,12 +195,16 @@ export async function runAutomatedTournament(req: Request, res: Response) {
         });
       }
 
+      console.log(`[AutoTournament] Completed round ${round} with ${gameResults.length} results`);
+
       roundResults.push({
         round,
         pairings: pairingResult.pairings.length,
         results: gameResults
       });
     }
+
+    console.log(`[AutoTournament] Tournament complete! Ran ${roundResults.length} rounds`);
 
     // Get final standings
     const standingsResult = await client.query(

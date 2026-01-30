@@ -44,7 +44,7 @@ export async function generateTRFFile(tournamentId: number, roundNumber: number)
 
   const tournament = tournamentResult.rows[0];
 
-  // Get all participants
+  // Get all participants (confirmed or registered, exclude withdrawn)
   const participantsResult = await query(
     `SELECT
       id,
@@ -53,7 +53,7 @@ export async function generateTRFFile(tournamentId: number, roundNumber: number)
       player_rating,
       pairing_number
     FROM tournament_registrations
-    WHERE tournament_id = $1 AND status = 'registered'
+    WHERE tournament_id = $1 AND status IN ('confirmed', 'registered')
     ORDER BY pairing_number ASC, player_rating DESC`,
     [tournamentId]
   );
