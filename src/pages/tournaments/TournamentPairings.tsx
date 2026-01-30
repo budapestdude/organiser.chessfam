@@ -28,7 +28,7 @@ export default function TournamentPairings() {
   const [generating, setGenerating] = useState(false);
   const [submittingResult, setSubmittingResult] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState<'pairings' | 'standings'>('pairings');
-  const [system, setSystem] = useState<'dutch' | 'burstein'>('dutch');
+  const system: 'dutch' | 'burstein' = 'dutch'; // Default pairing system
 
   useEffect(() => {
     loadData();
