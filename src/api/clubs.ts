@@ -45,19 +45,19 @@ export const clubsAPI = {
   async getMyClubs(): Promise<Club[]> {
     const response = await apiClient.get('/clubs');
     // Filter clubs where user is owner (will be done by backend ideally)
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Get club by ID
   async getClubById(id: number): Promise<Club> {
     const response = await apiClient.get(`/clubs/${id}`);
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Get club analytics
   async getClubAnalytics(id: number): Promise<ClubAnalytics> {
     const response = await apiClient.get(`/analytics/clubs/${id}/analytics`);
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Get club members
@@ -65,13 +65,13 @@ export const clubsAPI = {
     const response = await apiClient.get(`/clubs/${id}/members`, {
       params: { page, limit }
     });
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Get club events
   async getEvents(id: number) {
     const response = await apiClient.get(`/clubs/${id}/events`);
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Bulk member action
@@ -83,7 +83,7 @@ export const clubsAPI = {
     email_body?: string;
   }) {
     const response = await apiClient.post(`/clubs/${id}/members/bulk-action`, data);
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Export members
@@ -92,6 +92,7 @@ export const clubsAPI = {
       params: { format },
       responseType: 'blob'
     });
+    // Blob responses don't have the wrapper
     return response.data;
   },
 };

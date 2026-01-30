@@ -5,19 +5,19 @@ export const tournamentsAPI = {
   // Get all tournaments for current organizer
   async getMyTournaments(): Promise<Tournament[]> {
     const response = await apiClient.get('/tournaments/user/my-tournaments');
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Get tournament by ID
   async getTournamentById(id: number): Promise<Tournament> {
     const response = await apiClient.get(`/tournaments/${id}`);
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Get tournament analytics
   async getTournamentAnalytics(id: number): Promise<TournamentAnalytics> {
     const response = await apiClient.get(`/tournaments/${id}/analytics`);
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Get tournament participants
@@ -25,7 +25,7 @@ export const tournamentsAPI = {
     const response = await apiClient.get(`/tournaments/${id}/participants`, {
       params: { page, limit }
     });
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Bulk participant action
@@ -36,7 +36,7 @@ export const tournamentsAPI = {
     email_body?: string;
   }) {
     const response = await apiClient.post(`/tournaments/${id}/participants/bulk-action`, data);
-    return response.data;
+    return response.data.data || response.data;
   },
 
   // Export participants
@@ -45,6 +45,7 @@ export const tournamentsAPI = {
       params: { format },
       responseType: 'blob'
     });
+    // Blob responses don't have the wrapper
     return response.data;
   },
 };
