@@ -1,0 +1,49 @@
+# ChessFam Robots.txt
+# Allow all crawlers to index public content
+
+User-agent: *
+
+# Allow public pages
+Allow: /
+Allow: /tournaments
+Allow: /clubs
+Allow: /masters
+Allow: /players
+Allow: /locations
+Allow: /games
+Allow: /feed
+Allow: /premium
+Allow: /search
+
+# Disallow authenticated/private pages
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /messages
+Disallow: /my-tournaments
+Disallow: /my-clubs
+Disallow: /my-games
+Disallow: /payment
+Disallow: /booking-confirmation
+Disallow: /tournament-payment
+Disallow: /tournament-confirmation
+Disallow: /club-payment
+Disallow: /club-confirmation
+Disallow: /favorites
+Disallow: /account/
+Disallow: /verify-identity
+Disallow: /auth/callback
+
+# Disallow editing/creation pages (not useful for search)
+Disallow: /tournaments/create
+Disallow: /tournaments/edit/
+Disallow: /clubs/create
+Disallow: /venues/edit/
+Disallow: /register-venue
+Disallow: /venue-submitted
+
+# Allow API if needed for structured data
+Allow: /api/
+
+# Sitemap location
+Sitemap: https://chessfam.com/sitemap.xml
