@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { pairingsTestAPI } from '../../api/pairingsTest';
-import { pairingsAPI } from '../../api/pairings';
 import type { CreateTestTournamentResponse, AutomatedTournamentResult, SingleRoundResult, TournamentParticipant } from '../../api/pairingsTest';
 import type { StandingsEntry } from '../../api/pairings';
 import { Play, Zap, Trash2, SkipForward, Trophy, TrendingUp, Medal, UserX, Clock, Users as UsersIcon, AlertCircle } from 'lucide-react';

@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import {
   ArrowLeft,
   Plus,
   Trophy,
-  AlertCircle,
   Loader2,
   Trash2,
   CheckCircle,
@@ -54,11 +52,6 @@ export default function TournamentPairings() {
       setTournament(tournamentData);
       setRounds(roundsData);
       setStandings(standingsData);
-
-      // Set pairing system from tournament
-      if (tournamentData.pairing_system) {
-        setSystem(tournamentData.pairing_system);
-      }
 
       // Auto-select the latest round
       if (roundsData.length > 0) {
