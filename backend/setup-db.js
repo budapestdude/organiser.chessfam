@@ -198,6 +198,7 @@ const runMigration = async () => {
       '079_add_masters_event_availability.sql',
       '080_create_hashtag_system.sql',
       '081_add_refund_policies.sql',
+      '082_create_tournament_pairings_system.sql',
     ];
 
     for (const migration of migrations) {

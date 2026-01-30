@@ -88,6 +88,7 @@ import chessTitleVerificationRoutes from './routes/chessTitleVerification';
 import linkPreviewRoutes from './routes/linkPreview';
 import organizerRoutes from './routes/organizer';
 import pairingsRoutes from './routes/pairings';
+import pairingsTestRoutes from './routes/pairingsTest';
 
 // Import middleware
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
@@ -248,6 +249,7 @@ app.use('/api/v1/chess-title-verification', chessTitleVerificationRoutes);
 app.use('/api/v1/link-preview', linkPreviewRoutes);
 app.use('/api/v1/organizer', organizerRoutes);
 app.use('/api/v1/pairings', pairingsRoutes);
+app.use('/api/v1/pairings-test', pairingsTestRoutes);
 
 // 404 handler
 app.use(notFoundHandler);

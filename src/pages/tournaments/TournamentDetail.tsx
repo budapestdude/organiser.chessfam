@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { tournamentsAPI } from '../../api/tournaments';
 import type { Tournament } from '../../types';
-import { ChevronLeft, Users, BarChart3, Calendar, MapPin, Trophy } from 'lucide-react';
+import { ChevronLeft, Users, BarChart3, Calendar, MapPin, Trophy, Grid3x3 } from 'lucide-react';
 import { format } from 'date-fns';
 import TournamentAnalytics from './TournamentAnalytics';
 
@@ -174,6 +174,13 @@ export default function TournamentDetail() {
               {tournament.current_participants}
             </span>
           </button>
+          <Link
+            to={`/tournaments/${id}/pairings`}
+            className="flex items-center gap-2 px-6 py-3 border-b-2 border-transparent text-white/60 hover:text-white transition-colors"
+          >
+            <Grid3x3 className="w-4 h-4" />
+            <span>Pairings</span>
+          </Link>
           <button
             onClick={() => setActiveTab('analytics')}
             className={`flex items-center gap-2 px-6 py-3 border-b-2 transition-colors ${
@@ -220,13 +227,6 @@ export default function TournamentDetail() {
               </div>
             )}
           </div>
-        </div>
-      )}
-
-      {activeTab === 'participants' && (
-        <div className="glass-card p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Participants</h2>
-          <p className="text-white/60">Participant management coming in Phase 3...</p>
         </div>
       )}
 

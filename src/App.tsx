@@ -6,6 +6,8 @@ import Dashboard from './pages/Dashboard';
 import TournamentsList from './pages/tournaments/TournamentsList';
 import TournamentDetail from './pages/tournaments/TournamentDetail';
 import TournamentParticipants from './pages/tournaments/TournamentParticipants';
+import TournamentPairings from './pages/tournaments/TournamentPairings';
+import TournamentAutomatedTest from './pages/tournaments/TournamentAutomatedTest';
 import ClubsList from './pages/clubs/ClubsList';
 import ClubDetail from './pages/clubs/ClubDetail';
 import ClubMembers from './pages/clubs/ClubMembers';
@@ -54,6 +56,16 @@ function App() {
             <ProtectedRoute>
               <Layout>
                 <TournamentParticipants />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tournaments/:id/pairings"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <TournamentPairings />
               </Layout>
             </ProtectedRoute>
           }
@@ -114,6 +126,16 @@ function App() {
             <ProtectedRoute>
               <Layout>
                 <PairingsTest />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tournament-automated-test"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <TournamentAutomatedTest />
               </Layout>
             </ProtectedRoute>
           }
