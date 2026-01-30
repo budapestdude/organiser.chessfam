@@ -298,7 +298,26 @@ export const getTournaments = async (filters: {
     [...params, limit, offset]
   );
 
-  return { tournaments: result.rows, total };
+  // Parse JSON fields if they're strings
+  const tournaments = result.rows.map((row: any) => {
+    if (row.images && typeof row.images === 'string') {
+      try {
+        row.images = JSON.parse(row.images);
+      } catch {
+        row.images = [];
+      }
+    }
+    if (row.early_bird_pricing && typeof row.early_bird_pricing === 'string') {
+      try {
+        row.early_bird_pricing = JSON.parse(row.early_bird_pricing);
+      } catch {
+        row.early_bird_pricing = [];
+      }
+    }
+    return row;
+  });
+
+  return { tournaments, total };
 };
 
 export const getTournamentById = async (id: number): Promise<TournamentWithOrganizer> => {
@@ -320,13 +339,31 @@ export const getTournamentById = async (id: number): Promise<TournamentWithOrgan
     throw new NotFoundError('Tournament not found');
   }
 
+  const tournament = result.rows[0];
+
+  // Parse JSON fields if they're strings
+  if (tournament.images && typeof tournament.images === 'string') {
+    try {
+      tournament.images = JSON.parse(tournament.images);
+    } catch {
+      tournament.images = [];
+    }
+  }
+  if (tournament.early_bird_pricing && typeof tournament.early_bird_pricing === 'string') {
+    try {
+      tournament.early_bird_pricing = JSON.parse(tournament.early_bird_pricing);
+    } catch {
+      tournament.early_bird_pricing = [];
+    }
+  }
+
   console.log('[getTournamentById] Tournament data:', {
-    id: result.rows[0].id,
-    name: result.rows[0].name,
-    external_registration_url: result.rows[0].external_registration_url
+    id: tournament.id,
+    name: tournament.name,
+    external_registration_url: tournament.external_registration_url
   });
 
-  return result.rows[0];
+  return tournament;
 };
 
 export const createTournament = async (
@@ -785,7 +822,26 @@ export const getUserTournaments = async (userId: number): Promise<TournamentWith
     [userId]
   );
 
-  return result.rows;
+  // Parse JSON fields if they're strings
+  const tournaments = result.rows.map((row: any) => {
+    if (row.images && typeof row.images === 'string') {
+      try {
+        row.images = JSON.parse(row.images);
+      } catch {
+        row.images = [];
+      }
+    }
+    if (row.early_bird_pricing && typeof row.early_bird_pricing === 'string') {
+      try {
+        row.early_bird_pricing = JSON.parse(row.early_bird_pricing);
+      } catch {
+        row.early_bird_pricing = [];
+      }
+    }
+    return row;
+  });
+
+  return tournaments;
 };
 
 export const isUserRegistered = async (
@@ -815,7 +871,26 @@ export const getMyTournaments = async (userId: number): Promise<TournamentWithOr
     [userId]
   );
 
-  return result.rows;
+  // Parse JSON fields if they're strings
+  const tournaments = result.rows.map((row: any) => {
+    if (row.images && typeof row.images === 'string') {
+      try {
+        row.images = JSON.parse(row.images);
+      } catch {
+        row.images = [];
+      }
+    }
+    if (row.early_bird_pricing && typeof row.early_bird_pricing === 'string') {
+      try {
+        row.early_bird_pricing = JSON.parse(row.early_bird_pricing);
+      } catch {
+        row.early_bird_pricing = [];
+      }
+    }
+    return row;
+  });
+
+  return tournaments;
 };
 
 export const deleteTournament = async (
@@ -892,7 +967,19 @@ export const getAllTournamentSeries = async () => {
      ORDER BY t.created_at DESC`
   );
 
-  return result.rows;
+  // Parse JSON fields if they're strings
+  const series = result.rows.map((row: any) => {
+    if (row.images && typeof row.images === 'string') {
+      try {
+        row.images = JSON.parse(row.images);
+      } catch {
+        row.images = [];
+      }
+    }
+    return row;
+  });
+
+  return series;
 };
 
 /**
@@ -1045,6 +1132,22 @@ export const getTournamentSeries = async (tournamentId: number) => {
 
   const parent = parentResult.rows[0];
 
+  // Parse JSON fields if they're strings
+  if (parent.images && typeof parent.images === 'string') {
+    try {
+      parent.images = JSON.parse(parent.images);
+    } catch {
+      parent.images = [];
+    }
+  }
+  if (parent.early_bird_pricing && typeof parent.early_bird_pricing === 'string') {
+    try {
+      parent.early_bird_pricing = JSON.parse(parent.early_bird_pricing);
+    } catch {
+      parent.early_bird_pricing = [];
+    }
+  }
+
   // 4. Fetch all editions
   const editionsResult = await query(
     `SELECT t.*,
@@ -1060,7 +1163,24 @@ export const getTournamentSeries = async (tournamentId: number) => {
     [parentId]
   );
 
-  const editions = editionsResult.rows;
+  // Parse JSON fields if they're strings
+  const editions = editionsResult.rows.map((row: any) => {
+    if (row.images && typeof row.images === 'string') {
+      try {
+        row.images = JSON.parse(row.images);
+      } catch {
+        row.images = [];
+      }
+    }
+    if (row.early_bird_pricing && typeof row.early_bird_pricing === 'string') {
+      try {
+        row.early_bird_pricing = JSON.parse(row.early_bird_pricing);
+      } catch {
+        row.early_bird_pricing = [];
+      }
+    }
+    return row;
+  });
 
   // 5. Calculate stats
   const totalParticipants = editions.reduce(
@@ -1339,7 +1459,26 @@ export const getFestivalEvents = async (festivalId: number): Promise<TournamentW
     [festivalId]
   );
 
-  return result.rows;
+  // Parse JSON fields if they're strings
+  const tournaments = result.rows.map((row: any) => {
+    if (row.images && typeof row.images === 'string') {
+      try {
+        row.images = JSON.parse(row.images);
+      } catch {
+        row.images = [];
+      }
+    }
+    if (row.early_bird_pricing && typeof row.early_bird_pricing === 'string') {
+      try {
+        row.early_bird_pricing = JSON.parse(row.early_bird_pricing);
+      } catch {
+        row.early_bird_pricing = [];
+      }
+    }
+    return row;
+  });
+
+  return tournaments;
 };
 
 /**
