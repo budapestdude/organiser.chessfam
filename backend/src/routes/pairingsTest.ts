@@ -13,8 +13,14 @@ import {
 
 const router = express.Router();
 
-// All test routes require authentication
-router.use(authenticateToken);
+// Skip authentication in development for easier testing
+const authMiddleware = process.env.NODE_ENV === 'production' ? authenticateToken : (req: any, res: any, next: any) => {
+  // Mock user for development testing
+  req.user = { id: 1 };
+  next();
+};
+
+router.use(authMiddleware);
 
 // Create test tournament with mock participants
 router.post('/create', createTestTournament);

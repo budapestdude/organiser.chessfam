@@ -91,11 +91,11 @@ export async function createTestTournament(req: Request, res: Response) {
 
       const result = await client.query(
         `INSERT INTO tournament_registrations (
-          tournament_id, player_name, player_email, player_rating,
+          tournament_id, user_id, player_name, player_email, player_rating,
           status, pairing_number
-        ) VALUES ($1, $2, $3, $4, 'confirmed', $5)
+        ) VALUES ($1, $2, $3, $4, $5, 'confirmed', $6)
         RETURNING id, player_name, player_rating, pairing_number`,
-        [tournamentId, name, `player${i + 1}@test.com`, rating, i + 1]
+        [tournamentId, userId, name, `player${i + 1}@test.com`, rating, i + 1]
       );
 
       participants.push(result.rows[0]);
