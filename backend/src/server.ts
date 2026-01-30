@@ -87,6 +87,7 @@ import authorSubscriptionsRoutes from './routes/authorSubscriptions';
 import chessTitleVerificationRoutes from './routes/chessTitleVerification';
 import linkPreviewRoutes from './routes/linkPreview';
 import organizerRoutes from './routes/organizer';
+import pairingsRoutes from './routes/pairings';
 
 // Import middleware
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
@@ -246,6 +247,7 @@ app.use('/api/v1/author-subscriptions', authorSubscriptionsRoutes);
 app.use('/api/v1/chess-title-verification', chessTitleVerificationRoutes);
 app.use('/api/v1/link-preview', linkPreviewRoutes);
 app.use('/api/v1/organizer', organizerRoutes);
+app.use('/api/v1/pairings', pairingsRoutes);
 
 // 404 handler
 app.use(notFoundHandler);
