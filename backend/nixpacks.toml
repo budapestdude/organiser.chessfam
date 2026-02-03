@@ -1,11 +1,14 @@
 [phases.setup]
-nixPkgs = ["nodejs"]
+nixPkgs = ["nodejs", "gcc", "gnumake"]
 
 [phases.install]
 cmds = ["npm ci"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = [
+  "cd bbpPairings && make clean && make && cd ..",
+  "npm run build"
+]
 
 [start]
 cmd = "npm start"
