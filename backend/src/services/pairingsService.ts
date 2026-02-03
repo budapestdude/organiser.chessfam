@@ -2,6 +2,7 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import * as os from 'os';
 import { query } from '../config/database';
 import { NotFoundError, ValidationError } from '../utils/errors';
 
@@ -168,8 +169,8 @@ export async function generatePairings(
   // Generate TRF file
   const trfContent = await generateTRFFile(tournamentId, roundNumber);
 
-  // Create temporary files
-  const tempDir = path.join(__dirname, '../../bbpPairings/temp');
+  // Create temporary files in system temp directory
+  const tempDir = path.join(os.tmpdir(), 'bbpPairings');
   await fs.mkdir(tempDir, { recursive: true });
 
   const inputFile = path.join(tempDir, `tournament_${tournamentId}_round_${roundNumber}.trf`);
@@ -178,8 +179,18 @@ export async function generatePairings(
   // Write TRF file
   await fs.writeFile(inputFile, trfContent);
 
-  // Run bbpPairings
-  const bbpPath = path.join(__dirname, '../../bbpPairings/bbpPairings');
+  // Run bbpPairings (use environment variable or default path)
+  const bbpPath = process.env.BBPPAIRINGS_PATH || path.join(__dirname, '../../bbpPairings/bbpPairings');
+  console.log('[Pairings] Using bbpPairings at:', bbpPath);
+
+  // Verify executable exists
+  try {
+    await fs.access(bbpPath, fs.constants.X_OK);
+  } catch (error) {
+    console.error('[Pairings] bbpPairings executable not found or not executable at:', bbpPath);
+    throw new ValidationError(`bbpPairings executable not found at ${bbpPath}`);
+  }
+
   const command = `"${bbpPath}" --${system} "${inputFile}" -p "${outputFile}"`;
 
   try {

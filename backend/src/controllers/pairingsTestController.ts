@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import pool from '../config/database';
 import { generateAndSavePairings } from '../services/pairingsService';
-import { pairingsAPI } from './pairingsController';
 
 // Generate random chess player names
 const firstNames = ['Magnus', 'Garry', 'Bobby', 'Anatoly', 'Mikhail', 'Vishwanathan', 'Vladimir', 'Fabiano', 'Hikaru', 'Levon', 'Wesley', 'Maxime', 'Anish', 'Sergey', 'Alexander', 'Veselin', 'Teimour', 'Shakhriyar', 'Pentala', 'Wang', 'Ding', 'Jan', 'Richard', 'Alireza', 'Nodirbek'];
