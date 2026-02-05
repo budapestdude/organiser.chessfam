@@ -96,6 +96,7 @@ export interface Tournament {
   festival_id?: number;
   is_festival_parent?: boolean;
   is_series_parent?: boolean;
+  is_test?: boolean; // Flag for test/demo tournaments that should not appear in production
   premium_discount_eligible?: boolean; // Staff-managed: true if 10% discount applies for premium members
   early_bird_pricing?: EarlyBirdTier[]; // Array of up to 3 early bird pricing tiers
   // Variable pricing discounts
@@ -229,6 +230,9 @@ export const getTournaments = async (filters: {
   if (!includeUnapproved) {
     whereClause += ` AND t.approval_status = 'approved'`;
   }
+
+  // Filter out test tournaments from public listings
+  whereClause += ` AND (t.is_test = false OR t.is_test IS NULL)`;
 
   // Filter out series parents and festival parents (virtual containers, not real tournaments)
   whereClause += ` AND (t.is_series_parent = false OR t.is_series_parent IS NULL)`;
